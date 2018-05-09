@@ -46,6 +46,13 @@
             </c:forEach>
         </select>
 
+        <label for="supplierId">Поставщик</label>
+        <select id="supplierId" name="supplierId" class="form-control" style="width: 25%">
+            <c:forEach items="${suppliers}" var="sup">
+                <option value="${sup.id}">${sup.name}</option>
+            </c:forEach>
+        </select>
+
         <button type="submit" class="btn btn-default" style="margin-top: 10px">Создать</button>
     </form>
 </div>

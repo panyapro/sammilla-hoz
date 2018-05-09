@@ -8,12 +8,13 @@ public class Product {
 
     public Product(){}
 
-    public Product(String name, String code, Integer arrivalCost, Integer sellingPrice, Category category) {
+    public Product(String name, String code, Integer arrivalCost, Integer sellingPrice, Category category, Supplier supplier) {
         this.name = name;
         this.code = code;
         this.sellingPrice = sellingPrice;
         this.category = category;
         this.arrivalCost = arrivalCost;
+        this.supplier = supplier;
     }
 
     @Id
@@ -32,6 +33,10 @@ public class Product {
     @JoinColumn
     private Category category;
 
+    @OneToOne
+    @JoinColumn
+    private Supplier supplier;
+
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -49,6 +54,9 @@ public class Product {
 
     public Category getCategory() { return category; }
     public void setCategory(Category category) { this.category = category; }
+
+    public Supplier getSupplier() { return supplier; }
+    public void setSupplier(Supplier supplier) { this.supplier = supplier; }
 
     @Override
     public int hashCode() {

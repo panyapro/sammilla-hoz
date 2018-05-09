@@ -5,8 +5,10 @@ import kz.pavershin.consts.UrlMapping;
 import kz.pavershin.exceptions.InputValidationException;
 import kz.pavershin.models.Category;
 import kz.pavershin.models.Product;
+import kz.pavershin.models.Supplier;
 import kz.pavershin.services.impl.CategoryService;
 import kz.pavershin.services.impl.ProductService;
+import kz.pavershin.services.impl.SupplierService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,7 @@ public class ProductControllers {
 
     private ProductService productService;
     private CategoryService categoryService;
+    private SupplierService supplierService;
 
     @RequestMapping(value = UrlMapping.Product.OVERVIEW_PRODUCT,
             method = RequestMethod.GET)
@@ -33,6 +36,7 @@ public class ProductControllers {
     @RequestMapping(value = UrlMapping.Product.CREATE_PRODUCT)
     public String createProductView(Map<String, Object> model) {
         model.put("category", categoryService.findAll());
+        model.put("suppliers", supplierService.findAll());
 
         return JspFilePath.Product.CREATE_PRODUCT;
     }
@@ -42,6 +46,8 @@ public class ProductControllers {
                                   Map<String , Object> model) {
         model.put("product", productService.findById(Long.valueOf(productId)));
         model.put("category", categoryService.findAll());
+        model.put("suppliers", supplierService.findAll());
+
         return JspFilePath.Product.EDIT_PRODUCT;
     }
 
@@ -83,19 +89,24 @@ public class ProductControllers {
                                 @RequestParam(name = "arrivalCost", required = false) Integer arrivalCost,
                                 @RequestParam(name = "sellingPrice", required = false) Integer sellingPrice,
                                 @RequestParam(name = "categoryId", required = false) Integer categoryId,
+                                @RequestParam(name = "supplierId", required = false) Integer supplierId,
                                 Map<String, Object> model) {
         model.put("category", categoryService.findAll());
+        model.put("suppliers", supplierService.findAll());
+
         if (StringUtils.isEmpty(name) ||
                 StringUtils.isEmpty(code) ||
-//                arrivalCost == null ||
+//                arrivalCost == null || // TODO delete comment after adding all products
                 sellingPrice == null ||
+                supplierId == null ||
                 categoryId == null) {
             model.put("message", "Не все данные введены");
             return JspFilePath.Product.CREATE_PRODUCT;
         }
         try {
             Category category = categoryService.getById(categoryId.longValue());
-            Product product = new Product(name, code, arrivalCost, sellingPrice, category);
+            Supplier supplier = supplierService.getById(supplierId.longValue());
+            Product product = new Product(name, code, arrivalCost, sellingPrice, category, supplier);
             productService.save(product);
         } catch (InputValidationException e) {
             model.put("message", e.getMessage());
@@ -111,22 +122,26 @@ public class ProductControllers {
                                 @RequestParam(name = "arrivalCost", required = false) Integer arrivalCost,
                                 @RequestParam(name = "sellingPrice", required = false) Integer sellingPrice,
                                 @RequestParam(name = "categoryId", required = false) Integer categoryId,
+                                @RequestParam(name = "supplierId", required = false) Integer supplierId,
                                 @PathVariable(value = "productId") String productId,
                                 Map<String, Object> model) {
         model.put("product", productService.findById(Long.valueOf(productId)));
         model.put("category", categoryService.findAll());
+        model.put("suppliers", supplierService.findAll());
 
         if (StringUtils.isEmpty(name) ||
                 StringUtils.isEmpty(code) ||
 //                arrivalCost == null ||
                 sellingPrice == null ||
+                supplierId == null ||
                 categoryId == null) {
             model.put("message", "Не все данные введены");
             return JspFilePath.Product.EDIT_PRODUCT;
         }
         try {
             Category category = categoryService.getById(categoryId.longValue());
-            Product product = new Product(name, code, arrivalCost, sellingPrice, category);
+            Supplier supplier = supplierService.getById(supplierId.longValue());
+            Product product = new Product(name, code, arrivalCost, sellingPrice, category, supplier);
             productService.edit(product);
         } catch (InputValidationException e) {
             model.put("message", e.getMessage());
@@ -144,13 +159,6 @@ public class ProductControllers {
         }
         return productList;
     }
-//
-//    @RequestMapping(value = UrlMapping.Product.FIND_BY_ID)
-//    public @ResponseBody
-//    Product getProductListById(@RequestParam("id") Integer id) {
-//        Product product =
-//    }
-
 
     @Autowired
     public void setProductService(ProductService productService) {
@@ -161,4 +169,7 @@ public class ProductControllers {
     public void setCategoryService(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
+
+    @Autowired
+    public void setSupplierService(SupplierService supplierService) { this.supplierService = supplierService; }
 }

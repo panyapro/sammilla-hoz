@@ -18,6 +18,7 @@
                             <a href="/sammilla/product">Все продукты</a>
                             <a href="/sammilla/product/create">Создать продукт</a>
                             <a href="/sammilla/product/category/create">Создать категорию</a>
+                            <a href="/sammilla/supplier/create">Создать поставщика</a>
                         </li>
                     </ul>
                 </li>

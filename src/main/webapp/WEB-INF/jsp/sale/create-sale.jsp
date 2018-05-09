@@ -27,13 +27,21 @@
 <div class="container theme-showcase">
     <h1>Создание продажи</h1>
     <div>
-        <label for="searchProduct">
-            Название или штрихкод
-        </label>
-        <input style="width: 25%" type="text" id="searchProduct" class="form-control" placeholder="Название/штрихкод"
-               autofocus>
-
-        <button style="float: right" class="btn btn-default" style="margin-top: 10px" onclick="createSale()">Создать</button>
+        <div class="col-md-8">
+            <label for="searchProduct">
+                Название или штрихкод
+            </label>
+            <input style="width: 50%" type="text" id="searchProduct" class="form-control"
+                   placeholder="Название/штрихкод"
+                   autofocus>
+        </div>
+        <div class="col-md-4">
+            <b style="font-size: 24px; display: inline;">Общая сумма: </b>
+            <span style="display: inline; font-size: 22px;" id="totalAmount">0 тг.</span>
+            <button style="display: block" class="btn btn-default" onclick="createSale()">
+                Создать
+            </button>
+        </div>
     </div>
     <div style="clear:both"></div>
     <div class="table-responsive">

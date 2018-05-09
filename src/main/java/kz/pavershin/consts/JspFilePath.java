@@ -10,6 +10,11 @@ public interface JspFilePath {
         String EDIT_PRODUCT = PRODUCT_PATH + "/edit-product";
     }
 
+    interface Supplier {
+        String SUPPLIER_PATH = "supplier";
+        String CREATE_SUPPLIER = SUPPLIER_PATH + "/create-supplier";
+    }
+
     interface Sale {
         String SALE_PATH = "sale";
         String OVERVIEW = SALE_PATH + "/overview";

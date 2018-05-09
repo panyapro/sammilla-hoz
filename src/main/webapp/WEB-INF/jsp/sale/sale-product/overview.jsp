@@ -37,7 +37,8 @@
                 <th scope="col">Закупочная цена</th>
                 <th scope="col">Продажная цена</th>
                 <th scope="col">Количество</th>
-                <th scope="col">Общая маржа</th>
+                <th scope="col">Итого</th>
+                <th scope="col">Маржа</th>
             </tr>
             </thead>
             <tbody>
@@ -47,8 +48,9 @@
                     <td>${tableIndex}</td>
                     <td>${saleProduct.product.name}</td>
                     <td>${saleProduct.product.arrivalCost}</td>
-                    <td>${saleProduct.product.sellingPrice}</td>
+                    <td>${saleProduct.sellingPrice}</td>
                     <td>${saleProduct.quantity}</td>
+                    <td>${saleProduct.quantity * saleProduct.sellingPrice}</td>
                     <td>${saleProduct.totalMargin}</td>
                 </tr>
                 <c:set var="tableIndex" value="${tableIndex + 1}"/>

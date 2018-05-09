@@ -14,6 +14,11 @@ public interface UrlMapping {
         String AUTO_COMPLETE = PRODUCT + "/autocomplete";
     }
 
+    interface Supplier {
+        String SUPPLIER = SAMMILLA_PATH + "/supplier";
+        String CREATE_SUPPLIER = SUPPLIER + "/create";
+    }
+
     interface Sale {
         String SALE = "/sale";
         String OVERVIEW_SALE = SAMMILLA_PATH + SALE;

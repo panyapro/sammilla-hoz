@@ -76,7 +76,6 @@ public class SaleControllers {
             method = RequestMethod.POST)
     public ResponseEntity createSaleProduct(@RequestBody String stringJson) {
         List<SaleProduct> saleProductList = new ArrayList<>();
-        System.err.println(stringJson);
         JSONObject json = new JSONObject(stringJson);
         JSONArray saleProducts = json.getJSONArray("saleProducts");
         for (int i = 0; i < saleProducts.length(); i++) {
