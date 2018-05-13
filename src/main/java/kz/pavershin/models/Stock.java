@@ -1,23 +1,25 @@
 package kz.pavershin.models;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 public class Stock implements Serializable{
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @OneToOne
     @JoinColumn(name="productId")
-    private Product productId;
+    private Product product;
 
     private Integer quantity;
 
-    public Product getProductId() { return productId; }
-    public void setProductId(Product productId) { this.productId = productId; }
+    public Long getId() { return id; }
+
+    public Product getProduct() { return product; }
+    public void setProduct(Product product) { this.product = product; }
 
     public Integer getQuantity() { return quantity; }
     public void setQuantity(Integer quantity) { this.quantity = quantity; }
@@ -25,7 +27,7 @@ public class Stock implements Serializable{
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (productId != null ? productId.hashCode() : 0);
+        hash += (product != null ? product.hashCode() : 0);
         return hash;
     }
 
@@ -35,7 +37,7 @@ public class Stock implements Serializable{
             return false;
         }
         Stock other = (Stock) object;
-        if ((this.productId == null && other.productId != null) || (this.productId != null && !this.productId.equals(other.productId))) {
+        if ((this.product == null && other.product != null) || (this.product != null && !this.product.equals(other.product))) {
             return false;
         }
         return true;

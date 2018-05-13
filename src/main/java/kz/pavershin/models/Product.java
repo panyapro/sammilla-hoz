@@ -1,10 +1,11 @@
 package kz.pavershin.models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "PRODUCT")
-public class Product {
+public class Product implements Serializable{
 
     public Product(){}
 

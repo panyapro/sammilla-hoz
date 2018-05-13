@@ -1,5 +1,6 @@
 package kz.pavershin.services.impl;
 
+import kz.pavershin.exceptions.InputValidationException;
 import kz.pavershin.models.Sale;
 import kz.pavershin.models.SaleProduct;
 import kz.pavershin.repository.SaleProductDAO;
@@ -13,6 +14,7 @@ import java.util.List;
 public class SaleProductService implements GlobalService<SaleProduct> {
 
     private SaleProductDAO saleProductDAO;
+    private StockService stockService;
 
     @Override
     public List<SaleProduct> findAll() {
@@ -25,8 +27,10 @@ public class SaleProductService implements GlobalService<SaleProduct> {
     }
 
     @Override
-    public void save(SaleProduct saleProduct) {
+    public void save(SaleProduct saleProduct) throws InputValidationException{
         saleProductDAO.save(saleProduct);
+        stockService.save(saleProduct.getProduct(),-1 * saleProduct.getQuantity());
+
     }
 
     public List<SaleProduct> findBySale(Sale sale){
@@ -35,4 +39,7 @@ public class SaleProductService implements GlobalService<SaleProduct> {
 
     @Autowired
     public void setSaleProductDAO(SaleProductDAO saleProductDAO) { this.saleProductDAO = saleProductDAO; }
+
+    @Autowired
+    public void setStockService(StockService stockService) { this.stockService = stockService; }
 }

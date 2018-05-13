@@ -20,6 +20,7 @@ public class ProductService implements GlobalService<Product> {
 
     private ProductDAO productDAO;
     private AuxAttrService auxAttrService;
+    private StockService stockService;
 
     @Override
     public List<Product> findAll() {
@@ -33,6 +34,8 @@ public class ProductService implements GlobalService<Product> {
             throw new InputValidationException("Товар с таким штрихкодом существует");
         }
         productDAO.save(product);
+
+        stockService.save(product, 0);
     }
 
     public Product edit(Product newProduct) throws InputValidationException{
@@ -119,4 +122,7 @@ public class ProductService implements GlobalService<Product> {
     public void setAuxAttrService(AuxAttrService auxAttrService) {
         this.auxAttrService = auxAttrService;
     }
+
+    @Autowired
+    public void setStockService(StockService stockService) { this.stockService = stockService; }
 }

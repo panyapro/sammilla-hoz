@@ -2,9 +2,10 @@ package kz.pavershin.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 @Entity
-public class Supplier {
+public class Supplier implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

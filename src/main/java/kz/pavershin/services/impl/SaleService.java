@@ -1,5 +1,6 @@
 package kz.pavershin.services.impl;
 
+import kz.pavershin.exceptions.InputValidationException;
 import kz.pavershin.models.Sale;
 import kz.pavershin.models.SaleProduct;
 import kz.pavershin.repository.SaleDAO;
@@ -42,7 +43,11 @@ public class SaleService implements GlobalService<Sale>{
 
         for(SaleProduct saleProduct : saleProducts){
             saleProduct.setSaleId(sale);
-            saleProductService.save(saleProduct);
+            try {
+                saleProductService.save(saleProduct);
+            } catch(InputValidationException e){
+                System.err.println("Failed create saleProduct " + e);
+            }
         }
     }
 
