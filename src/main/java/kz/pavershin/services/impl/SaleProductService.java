@@ -29,7 +29,7 @@ public class SaleProductService implements GlobalService<SaleProduct> {
     @Override
     public void save(SaleProduct saleProduct) throws InputValidationException{
         saleProductDAO.save(saleProduct);
-        stockService.save(saleProduct.getProduct(),-1 * saleProduct.getQuantity());
+        stockService.save(saleProduct.getProduct(),-1 * saleProduct.getQuantity(), true);
 
     }
 

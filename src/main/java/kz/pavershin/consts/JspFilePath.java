@@ -21,4 +21,11 @@ public interface JspFilePath {
         String CREATE_SALE = SALE_PATH + "/create-sale";
         String OVERIVEW_SALE_PRODUCT = SALE_PATH + "/sale-product/overview";
     }
+
+    interface Revision {
+        String REVISION_PATH = "revision";
+        String OVERVIEW = REVISION_PATH + "/overview";
+        String CREATE_REVISION = REVISION_PATH + "/create-revision";
+        String OVERIVEW_REVISION_PRODUCT = REVISION_PATH + "/revision-product/overview";
+    }
 }

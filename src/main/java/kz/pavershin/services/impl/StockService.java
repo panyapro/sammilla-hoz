@@ -33,10 +33,14 @@ public class StockService implements GlobalService<Stock> {
         return null;
     }
 
-    public void save(Product product, Integer quantity) throws InputValidationException{
+    public void save(Product product, Integer quantity, boolean isIncrement) throws InputValidationException{
         Stock stock = stockDAO.findByProduct(product);
         if(stock != null){
-            stock.setQuantity(stock.getQuantity() + quantity);
+            if (isIncrement) {
+                stock.setQuantity(stock.getQuantity() + quantity);
+            } else {
+                stock.setQuantity(quantity);
+            }
         } else {
             stock = new Stock();
             stock.setProduct(product);

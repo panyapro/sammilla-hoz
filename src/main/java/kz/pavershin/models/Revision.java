@@ -9,14 +9,14 @@ public class Revision implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     private Double amount;
 
     @Column(name = "revision_date")
     private Date revisionDate;
 
-    public Integer getId() { return id; }
+    public Long getId() { return id; }
 
     public Double getAmount() { return amount; }
     public void setAmount(Double amount) { this.amount = amount; }

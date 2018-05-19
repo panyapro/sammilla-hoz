@@ -33,9 +33,9 @@ public class ProductService implements GlobalService<Product> {
         if(oldProduct != null){
             throw new InputValidationException("Товар с таким штрихкодом существует");
         }
-        productDAO.save(product);
+        createOrEditProduct(product);
 
-        stockService.save(product, 0);
+        stockService.save(product, 0, false);
     }
 
     public Product edit(Product newProduct) throws InputValidationException{
@@ -44,7 +44,19 @@ public class ProductService implements GlobalService<Product> {
             throw new InputValidationException("Товара с таким штрихкодом не существует");
         }
         newProduct.setId(oldProduct.getId());
-        return productDAO.save(newProduct);
+        return createOrEditProduct(newProduct);
+    }
+
+    /**
+     * PLEASE USE THIS METHOD FOR CREATE / EDIT PRODUCT
+     * @param product
+     * @return
+     */
+    private Product createOrEditProduct(Product product){
+        product.setName(product.getName().toLowerCase());
+        productDAO.save(product);
+
+        return product;
     }
 
     public String generateBarCode(){

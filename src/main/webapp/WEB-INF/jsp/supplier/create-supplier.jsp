@@ -30,9 +30,7 @@
         <input style="width: 25%" type="text" id="phoneNumber" class="form-control" name="phoneNumber">
 
         <label for="description">Описание</label>
-        <textarea style="width: 25%" type="text" id="description" class="form-control" name="description">
-
-            </textarea>
+        <textarea style="width: 25%" type="text" id="description" class="form-control" name="description"></textarea>
 
         <button type="submit" class="btn btn-default" style="margin-top: 10px">Создать</button>
     </form>

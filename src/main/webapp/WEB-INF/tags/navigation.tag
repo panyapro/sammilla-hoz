@@ -35,6 +35,19 @@
                         </li>
                     </ul>
                 </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">
+                        Ревизия
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="/sammilla/revision">Просмотр ревизий</a>
+                            <a href="/sammilla/revision/create">Создать ревизию</a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>

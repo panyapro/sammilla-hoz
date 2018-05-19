@@ -16,50 +16,45 @@
     <script type="text/javascript" src="/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/js/product.js"></script>
-    <script type="text/javascript" src="/js/sale.js"></script>
 
 </head>
 
 <body>
 
 <nav:navigation/>
-<script>
-    globalUrl = "/sammilla/sale/create";
-    globalTableName = "saleProductTable";
-</script>
+
 <div class="container theme-showcase">
-    <h1>Создание продажи</h1>
-    <div>
-        <div class="col-md-8">
-            <label for="searchProduct">
-                Название или штрихкод
-            </label>
-            <input style="width: 50%" type="text" id="searchProduct" class="form-control"
-                   placeholder="Название/штрихкод"
-                   autofocus>
-        </div>
-        <div class="col-md-4">
-            <b style="font-size: 24px; display: inline;">Общая сумма: </b>
-            <span style="display: inline; font-size: 22px;" id="totalAmount">0 тг.</span>
-            <button style="display: block" class="btn btn-default" onclick="create()">
-                Создать
-            </button>
-        </div>
-    </div>
-    <div style="clear:both"></div>
+    <h1>Обзор ревизии</h1>
+
+    <h2 class="sub-header">Сумма ревезии по продажной - ${totalAmount} тг.</h2>
+    <h2 class="sub-header">Сумма ревезии по закупочной - ${totalSellingAmount} тг.</h2>
     <div class="table-responsive">
-        <table id="saleProductTable" class="table table-striped">
+        <table id="productTable" class="table table-striped">
             <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Продукт</th>
-                <%--<th scope="col">Закупочная цена</th>--%>
+                <th scope="col">Название</th>
+                <th scope="col">Закупочная цена</th>
                 <th scope="col">Продажная цена</th>
                 <th scope="col">Количество</th>
-                <th scope="col">Общая сумма</th>
+                <th scope="col">Итого</th>
+                <th scope="col">Маржа</th>
             </tr>
             </thead>
             <tbody>
+            <c:set var="tableIndex" value="1"/>
+            <c:forEach items="${revisionProducts}" var="revisionProduct">
+                <tr>
+                    <td>${tableIndex}</td>
+                    <td>${revisionProduct.product.name}</td>
+                    <td>${revisionProduct.product.arrivalCost}</td>
+                    <td>${revisionProduct.sellingPrice}</td>
+                    <td>${revisionProduct.quantity}</td>
+                    <td>${revisionProduct.quantity * revisionProduct.sellingPrice}</td>
+                    <td>${revisionProduct.totalMargin}</td>
+                </tr>
+                <c:set var="tableIndex" value="${tableIndex + 1}"/>
+            </c:forEach>
             </tbody>
         </table>
     </div>

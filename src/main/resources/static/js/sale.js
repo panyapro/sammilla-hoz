@@ -1,4 +1,4 @@
-var saleProducts = [];
+var newObjects = [];
 var allSearchedProducts = [];
 
 var counter = 0;
@@ -13,12 +13,12 @@ function extractLast(term) {
 
 function insertData(name, sellingPrice) {
     var tableRowId = counter + 1;
-    var totalAmount = saleProducts[counter].quantity * saleProducts[counter].sellingPrice;
-    document.getElementById("saleProductTable").insertRow(-1).innerHTML = '' +
+    var totalAmount = newObjects[counter].quantity * newObjects[counter].sellingPrice;
+    document.getElementById(globalTableName).insertRow(-1).innerHTML = '' +
         '<td>' + tableRowId + '</td>' +
         '<td>' + name + '</td>' +
         '<td><input onkeyup="changeData(\'' + counter + '\', this,\'sellingPrice\')" class="form-control" value="' + sellingPrice + '"</td>' +
-        '<td><input onkeyup="changeData(\'' + counter + '\', this,\'quantity\')" class="form-control" value="' + saleProducts[counter].quantity + '"</td>' +
+        '<td><input onkeyup="changeData(\'' + counter + '\', this,\'quantity\')" class="form-control" value="' + newObjects[counter].quantity + '"</td>' +
         '<td>' + totalAmount + '</td>';
     counter++;
     calculateTotalAmount();
@@ -28,10 +28,10 @@ function changeData(rowNumber, input, column) {
     var val = input.value;
     switch (column) {
         case 'sellingPrice':
-            saleProducts[rowNumber].sellingPrice = Number(val);
+            newObjects[rowNumber].sellingPrice = Number(val);
             break;
         case 'quantity':
-            saleProducts[rowNumber].quantity = Number(val);
+            newObjects[rowNumber].quantity = Number(val);
             break;
     }
     calculateTotalByRow(rowNumber);
@@ -39,30 +39,30 @@ function changeData(rowNumber, input, column) {
 }
 
 function calculateTotalByRow(rowNumber) {
-    document.getElementById("saleProductTable").rows[parseInt(rowNumber) + 1].cells[4].innerHTML =
-        saleProducts[rowNumber].quantity * saleProducts[rowNumber].sellingPrice;
+    document.getElementById(globalTableName).rows[parseInt(rowNumber) + 1].cells[4].innerHTML =
+        newObjects[rowNumber].quantity * newObjects[rowNumber].sellingPrice;
 }
 
 function calculateTotalAmount() {
     var totalAmount = 0;
-    for (var i = 0; i < saleProducts.length; i++) {
-        totalAmount += saleProducts[i].quantity * saleProducts[i].sellingPrice;
+    for (var i = 0; i < newObjects.length; i++) {
+        totalAmount += newObjects[i].quantity * newObjects[i].sellingPrice;
     }
     $("#totalAmount").text(totalAmount + " тг.");
 }
 
 function clearTable(){
-    $("#saleProductTable").find("tr:gt(0)").remove();
+    $("#" + globalTableName).find("tr:gt(0)").remove();
     $("#totalAmount").text(0 + " тг.");
-    saleProducts = [];
+    newObjects = [];
     counter = 0;
 }
 
-function createSale() {
+function create() {
     $.ajax({
         type: "POST",
-        url: "/sammilla/sale/create",
-        data: JSON.stringify({"saleProducts": saleProducts}),
+        url: globalUrl,
+        data: JSON.stringify({jsonObjectName: newObjects}),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: clearTable()
@@ -77,13 +77,32 @@ $(document).ready(function () {
                     term: extractLast(request.term)
                 }
                 , function (data) {
-                    response($.map(data, function (item) {
-                        allSearchedProducts.push(item);
-                        return {
-                            label: item.name,
-                            value: item.id
-                        }
-                    }))
+                console.log(data);
+                console.log($.isNumeric(request.term));
+                    console.log(data.length);
+                    if ($.isNumeric(request.term) && data[0] != null && data.length == 1) {
+                        var selectedProduct = data[0];
+                        selectedProduct.tableId = counter;
+                        selectedProduct.quantity = 1;
+                        newObjects.push(selectedProduct);
+                        insertData(selectedProduct.name, selectedProduct.sellingPrice);
+                        $("#searchProduct").val("");
+
+                        allSearchedProducts = [];
+                    } else if (data[0] == null) {
+                        $("#searchProduct").val("");
+
+                        allSearchedProducts = [];
+                    } else {
+                        response($.map(data, function (item) {
+                            console.log(item);
+                            allSearchedProducts.push(item);
+                            return {
+                                label: item.name,
+                                value: item.id
+                            }
+                        }));
+                    }
                 });
         },
         search: function () {
@@ -101,7 +120,7 @@ $(document).ready(function () {
             var selectedProduct = findObjectByKey(allSearchedProducts, "id", ui.item.value);
             selectedProduct.tableId = counter;
             selectedProduct.quantity = 1;
-            saleProducts.push(selectedProduct);
+            newObjects.push(selectedProduct);
             insertData(selectedProduct.name, selectedProduct.sellingPrice);
             $("#searchProduct").val("");
 

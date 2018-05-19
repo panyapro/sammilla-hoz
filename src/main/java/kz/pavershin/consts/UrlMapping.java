@@ -25,4 +25,11 @@ public interface UrlMapping {
         String CREATE_SALE = OVERVIEW_SALE + "/create";
         String OVERVIEW_SALE_PRODUCT = OVERVIEW_SALE + "/{saleId}";
     }
+
+    interface Revision {
+        String REVISION = "/revision";
+        String OVERVIEW_REVISION = SAMMILLA_PATH + REVISION;
+        String CREATE_REVISION = OVERVIEW_REVISION + "/create";
+        String OVERVIEW_REVISION_PRODUCT = OVERVIEW_REVISION + "/{revisionId}";
+    }
 }

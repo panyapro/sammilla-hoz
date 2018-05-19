@@ -68,7 +68,8 @@ public class SaleControllers {
     }
 
     @RequestMapping(path = UrlMapping.Sale.CREATE_SALE)
-    public String saleProductView() {
+    public String saleProductView(Map<String, Object> map) {
+        map.put("disabled", false);
         return JspFilePath.Sale.CREATE_SALE;
     }
 

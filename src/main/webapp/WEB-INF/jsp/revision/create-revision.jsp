@@ -24,11 +24,11 @@
 
 <nav:navigation/>
 <script>
-    globalUrl = "/sammilla/sale/create";
-    globalTableName = "saleProductTable";
+    globalUrl = "/sammilla/revision/create";
+    globalTableName = "revisionProductTable";
 </script>
 <div class="container theme-showcase">
-    <h1>Создание продажи</h1>
+    <h1>Создание ревизии</h1>
     <div>
         <div class="col-md-8">
             <label for="searchProduct">
@@ -48,7 +48,7 @@
     </div>
     <div style="clear:both"></div>
     <div class="table-responsive">
-        <table id="saleProductTable" class="table table-striped">
+        <table id="revisionProductTable" class="table table-striped">
             <thead>
             <tr>
                 <th scope="col">#</th>
