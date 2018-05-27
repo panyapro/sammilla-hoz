@@ -42,6 +42,7 @@
                 <th scope="col">Категория</th>
                 <th scope="col">Закупочная</th>
                 <th scope="col">Продажная</th>
+                <th scope="col">Остаток по базе</th>
                 <th scope="col">Редактировать</th>
             </tr>
             </thead>
@@ -56,6 +57,9 @@
                     <td>${product.category.name}</td>
                     <td>${product.arrivalCost}</td>
                     <td>${product.sellingPrice}</td>
+                    <td><span style="font-size:18px; color: ${stockProduct.get(product.id) > 0 ? 'green' : stockProduct.get(product.id) < 0 ? 'red' : 'black'}">
+                        ${stockProduct.get(product.id)} шт.
+                    </span></td>
                     <td>
                         <a style="font-size: 30px;" href="/sammilla/product/edit/${product.id}">
                             <i class="fas fa-pen-square"></i>

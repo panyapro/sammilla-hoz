@@ -20,6 +20,9 @@ public class RevisionService implements GlobalService<Revision>{
     @Autowired
     private RevisionProductService revisionProductService;
 
+    @Autowired
+    private AccountService accountService;
+
     @Override
     public List<Revision> findAll() {
         return revisionDAO.findAllByOrderByRevisionDateDesc();
@@ -49,6 +52,8 @@ public class RevisionService implements GlobalService<Revision>{
                 System.err.println("Failed creating revision product" + e);
             }
         }
+
+        accountService.save(revision.getAmount(), false);
     }
 
     @Override

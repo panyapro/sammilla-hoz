@@ -8,6 +8,7 @@ import kz.pavershin.models.Product;
 import kz.pavershin.models.Supplier;
 import kz.pavershin.services.impl.CategoryService;
 import kz.pavershin.services.impl.ProductService;
+import kz.pavershin.services.impl.StockService;
 import kz.pavershin.services.impl.SupplierService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,11 +26,18 @@ public class ProductControllers {
     private ProductService productService;
     private CategoryService categoryService;
     private SupplierService supplierService;
+    private StockService stockService;
 
     @RequestMapping(value = UrlMapping.Product.OVERVIEW_PRODUCT,
             method = RequestMethod.GET)
     public String productView(Map<String, Object> model) {
-        model.put("products", productService.findAll());
+        List<Product> products = productService.findAll();
+        model.put("products", products);
+        Map<Long, Integer > stockProduct = new HashMap<>();
+        for(Product p : products){
+            stockProduct.put(p.getId(), stockService.getByProduct(p).getQuantity());
+        }
+        model.put("stockProduct", stockProduct);
 
         return JspFilePath.Product.OVERVIEW;
     }
@@ -97,15 +106,23 @@ public class ProductControllers {
         if (StringUtils.isEmpty(name) ||
                 StringUtils.isEmpty(code) ||
 //                arrivalCost == null || // TODO delete comment after adding all products
-                sellingPrice == null ||
-                supplierId == null ||
-                categoryId == null) {
+                sellingPrice == null
+//                supplierId == null ||
+//                categoryId == null)
+                ){
             model.put("message", "Не все данные введены");
             return JspFilePath.Product.CREATE_PRODUCT;
         }
         try {
-            Category category = categoryService.getById(categoryId.longValue());
-            Supplier supplier = supplierService.getById(supplierId.longValue());
+            Category category = null;
+            if(categoryId != null){
+                category = categoryService.getById(categoryId.longValue());
+            }
+
+            Supplier supplier = null;
+            if(supplierId != null){
+                supplier = supplierService.getById(supplierId.longValue());
+            }
             Product product = new Product(name, code, arrivalCost, sellingPrice, category, supplier);
             productService.save(product);
         } catch (InputValidationException e) {
@@ -132,15 +149,23 @@ public class ProductControllers {
         if (StringUtils.isEmpty(name) ||
                 StringUtils.isEmpty(code) ||
 //                arrivalCost == null ||
-                sellingPrice == null ||
-                supplierId == null ||
-                categoryId == null) {
+                sellingPrice == null
+//                supplierId == null ||
+//                categoryId == null
+                ) {
             model.put("message", "Не все данные введены");
             return JspFilePath.Product.EDIT_PRODUCT;
         }
         try {
-            Category category = categoryService.getById(categoryId.longValue());
-            Supplier supplier = supplierService.getById(supplierId.longValue());
+            Category category = null;
+            if(categoryId != null){
+                category = categoryService.getById(categoryId.longValue());
+            }
+
+            Supplier supplier = null;
+            if(supplierId != null){
+                supplier = supplierService.getById(supplierId.longValue());
+            }
             Product product = new Product(name, code, arrivalCost, sellingPrice, category, supplier);
             productService.edit(product);
         } catch (InputValidationException e) {
@@ -172,4 +197,7 @@ public class ProductControllers {
 
     @Autowired
     public void setSupplierService(SupplierService supplierService) { this.supplierService = supplierService; }
+
+    @Autowired
+    public void setStockService(StockService stockService){this.stockService = stockService;}
 }

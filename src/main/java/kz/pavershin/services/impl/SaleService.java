@@ -20,6 +20,9 @@ public class SaleService implements GlobalService<Sale>{
     @Autowired
     private SaleProductService saleProductService;
 
+    @Autowired
+    private AccountService accountService;
+
     @Override
     public List<Sale> findAll() {
         return saleDAO.findAllByOrderBySaleDateDesc();
@@ -49,6 +52,8 @@ public class SaleService implements GlobalService<Sale>{
                 System.err.println("Failed create saleProduct " + e);
             }
         }
+
+        accountService.save(sale.getAmount(), true);
     }
 
     @Override

@@ -42,6 +42,7 @@
 
         <label for="categoryId">Категория</label>
         <select id="categoryId" name="categoryId" class="form-control" style="width: 25%">
+            <option value="${null}">Выберите категорию</option>
             <c:forEach items="${category}" var="category">
                 <option value="${category.id}">${category.name}</option>
             </c:forEach>
@@ -49,6 +50,7 @@
 
         <label for="supplierId">Поставщик</label>
         <select id="supplierId" name="supplierId" class="form-control" style="width: 25%">
+            <option value="${null}">Выберите поставщика</option>
             <c:forEach items="${suppliers}" var="sup">
                 <option value="${sup.id}">${sup.name}</option>
             </c:forEach>
@@ -61,6 +63,7 @@
 </div>
 <script>
     $("#categoryId").val(${product.category.id})
+    $("#supplierId").val(${product.supplier.id})
 </script>
 </body>
 

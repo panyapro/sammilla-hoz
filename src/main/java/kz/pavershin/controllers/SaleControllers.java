@@ -78,7 +78,7 @@ public class SaleControllers {
     public ResponseEntity createSaleProduct(@RequestBody String stringJson) {
         List<SaleProduct> saleProductList = new ArrayList<>();
         JSONObject json = new JSONObject(stringJson);
-        JSONArray saleProducts = json.getJSONArray("saleProducts");
+        JSONArray saleProducts = json.getJSONArray("jsonObjectName");
         for (int i = 0; i < saleProducts.length(); i++) {
             JSONObject saleProductObj = saleProducts.getJSONObject(i);
 

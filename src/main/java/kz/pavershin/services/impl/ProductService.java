@@ -35,7 +35,7 @@ public class ProductService implements GlobalService<Product> {
         }
         createOrEditProduct(product);
 
-        stockService.save(product, 0, false);
+        stockService.save(product, 0, true);
     }
 
     public Product edit(Product newProduct) throws InputValidationException{

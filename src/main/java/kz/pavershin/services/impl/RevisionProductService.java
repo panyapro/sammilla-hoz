@@ -24,7 +24,7 @@ public class RevisionProductService implements GlobalService<RevisionProduct>{
     @Override
     public void save(RevisionProduct revisionProduct) throws InputValidationException {
         revisionProductDAO.save(revisionProduct);
-        stockService.save(revisionProduct.getProduct(), revisionProduct.getQuantity(), false);
+        stockService.save(revisionProduct.getProduct(), revisionProduct.getQuantity(), true);
     }
 
     public List<RevisionProduct> findByRevision(Revision revision){
