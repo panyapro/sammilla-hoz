@@ -77,9 +77,6 @@ $(document).ready(function () {
                     term: extractLast(request.term)
                 }
                 , function (data) {
-                console.log(data);
-                console.log($.isNumeric(request.term));
-                    console.log(data.length);
                     if ($.isNumeric(request.term) && data[0] != null && data.length == 1) {
                         var selectedProduct = data[0];
                         selectedProduct.tableId = counter;
@@ -89,11 +86,7 @@ $(document).ready(function () {
                         $("#searchProduct").val("");
 
                         allSearchedProducts = [];
-                    } else if (data[0] == null) {
-                        $("#searchProduct").val("");
-
-                        allSearchedProducts = [];
-                    } else {
+                     } else {
                         response($.map(data, function (item) {
                             console.log(item);
                             allSearchedProducts.push(item);

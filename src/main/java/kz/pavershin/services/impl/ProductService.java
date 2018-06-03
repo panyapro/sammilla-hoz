@@ -114,7 +114,7 @@ public class ProductService implements GlobalService<Product> {
 
     public boolean isCheckBitRight(String code) {
         //is only digits
-        if(StringUtils.isNumeric(code)){
+        if(!StringUtils.isNumeric(code)){
             return false;
         }
 
