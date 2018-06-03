@@ -117,6 +117,14 @@ public class ProductService implements GlobalService<Product> {
         if(StringUtils.isNumeric(code)){
             return false;
         }
+
+        char[] codeChars = code.toCharArray();
+        for (int i = 0; i < codeChars.length; i++) {
+            if (Character.isSpaceChar(codeChars[i])) {
+                return false;
+            }
+        }
+
         int s = 0;
         int k = 0;
         for (int i = code.length() - 2; i >= 0; i--) {

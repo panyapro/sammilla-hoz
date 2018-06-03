@@ -6,7 +6,7 @@ function filterTable() {
     table = document.getElementById("productTable");
     tr = table.getElementsByTagName("tr");
 
-    if($.isNumeric(filter)){
+    if(isCheckBitRight(filter)){
         col = 2;
     } else {
         col = 1;
@@ -31,4 +31,29 @@ function generateBarCode() {
         success: function(result){
         input.value = result;
     }});
+}
+
+function isCheckBitRight(code) {
+    //validate is digit
+    if(!$.isNumeric(code)){
+        return false;
+    }
+
+    if (code == null || !code.hasOwnProperty("length")) {
+        return false;
+    }
+    var s = 0;
+    var k = 0;
+    for (var i = code.length - 2; i >= 0; i--) {
+        if (k % 2 === 0) {
+            s += parseInt(code.charAt(i) + "") * 3;
+        } else {
+            s += parseInt(code.charAt(i) + "");
+        }
+        k++;
+    }
+    if (parseInt(code.charAt(code.length - 1) + "") !== (10 - s % 10) % 10) {
+        return false;
+    }
+    return true;
 }
