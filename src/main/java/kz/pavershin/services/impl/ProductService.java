@@ -79,7 +79,7 @@ public class ProductService implements GlobalService<Product> {
     }
 
     public List<Product> findByCodeOrName(String codeOrName) {
-        if (StringUtils.isNumeric(codeOrName)) {
+        if (isCheckBitRight(codeOrName)) {
             return new ArrayList(Arrays.asList(productDAO.findByCode(codeOrName)));
         } else {
             return productDAO.findByNameContains(codeOrName);
@@ -110,6 +110,27 @@ public class ProductService implements GlobalService<Product> {
             k++;
         }
         return (10 - s % 10) % 10;
+    }
+
+    public boolean isCheckBitRight(String code) {
+        //is only digits
+        if(StringUtils.isNumeric(code)){
+            return false;
+        }
+        int s = 0;
+        int k = 0;
+        for (int i = code.length() - 2; i >= 0; i--) {
+            if (k % 2 == 0) {
+                s += new Integer(code.charAt(i) + "") * 3;
+            } else {
+                s += new Integer(code.charAt(i) + "");
+            }
+            k++;
+        }
+        if (new Integer(code.charAt(code.length() - 1) + "") != (10 - s % 10) % 10) {
+            return false;
+        }
+        return true;
     }
 
     @Override
