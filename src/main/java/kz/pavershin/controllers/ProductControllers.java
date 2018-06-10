@@ -129,7 +129,7 @@ public class ProductControllers {
             model.put("message", e.getMessage());
             return JspFilePath.Product.CREATE_PRODUCT;
         }
-        return "redirect:" + UrlMapping.Product.OVERVIEW_PRODUCT;
+        return JspFilePath.Product.CREATE_PRODUCT;
     }
 
     @RequestMapping(value = UrlMapping.Product.EDIT_PRODUCT,

@@ -14,7 +14,7 @@ function extractLast(term) {
 function insertData(name, sellingPrice) {
     var tableRowId = counter + 1;
     var totalAmount = newObjects[counter].quantity * newObjects[counter].sellingPrice;
-    document.getElementById(globalTableName).insertRow(-1).innerHTML = '' +
+    document.getElementById(globalTableName).insertRow(1).innerHTML = '' +
         '<td>' + tableRowId + '</td>' +
         '<td>' + name + '</td>' +
         '<td><input onkeyup="changeData(\'' + counter + '\', this,\'sellingPrice\')" class="form-control" value="' + sellingPrice + '"</td>' +
@@ -88,7 +88,6 @@ $(document).ready(function () {
                         allSearchedProducts = [];
                      } else {
                         response($.map(data, function (item) {
-                            console.log(item);
                             allSearchedProducts.push(item);
                             return {
                                 label: item.name,

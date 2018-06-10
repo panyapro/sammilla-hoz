@@ -58,6 +58,9 @@
         <button type="submit" class="btn btn-default" style="margin-top: 10px">Создать</button>
     </form>
 </div>
+<script>
+    $("#name").focus();
+</script>
 
 </body>
 
