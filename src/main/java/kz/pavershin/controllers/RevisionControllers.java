@@ -68,8 +68,7 @@ public class RevisionControllers {
         JSONArray revisionProducts = json.getJSONArray("jsonObjectName");
         for (int i = 0; i < revisionProducts.length(); i++) {
             JSONObject revisionProductObj = revisionProducts.getJSONObject(i);
-            Integer arrivalCost = (Integer) (revisionProductObj.get("arrivalCost") == null ? 0 :revisionProductObj.get("arrivalCost"));
-            Integer margin = (Integer) revisionProductObj.get("sellingPrice") - arrivalCost;
+            Integer margin = (Integer) revisionProductObj.get("sellingPrice") - (Integer) revisionProductObj.get("arrivalCost");
             Integer quantity = (Integer) revisionProductObj.get("quantity");
 
             RevisionProduct revisionProduct = new RevisionProduct();

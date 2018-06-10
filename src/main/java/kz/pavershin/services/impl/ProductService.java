@@ -53,6 +53,9 @@ public class ProductService implements GlobalService<Product> {
      * @return
      */
     private Product createOrEditProduct(Product product){
+        if (product.getArrivalCost() == null) {
+            product.setArrivalCost(0);
+        }
         product.setName(product.getName().toLowerCase());
         productDAO.save(product);
 
