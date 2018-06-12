@@ -46,11 +46,12 @@ public class RevisionService implements GlobalService<Revision>{
 
         for(RevisionProduct revisionProduct : revisionProducts){
             revisionProduct.setRevisionId(revision);
-            try {
-                revisionProductService.save(revisionProduct);
-            } catch(InputValidationException e){
-                System.err.println("Failed creating revision product" + e);
-            }
+        }
+
+        try {
+            revisionProductService.save(revisionProducts);
+        } catch(InputValidationException e){
+            System.err.println("Failed creating revision product" + e);
         }
 
         accountService.save(revision.getAmount(), false);

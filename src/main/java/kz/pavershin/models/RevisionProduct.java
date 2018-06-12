@@ -16,6 +16,8 @@ public class RevisionProduct extends ItemsProduct implements Serializable {
     @JoinColumn
     private Revision revisionId;
 
+    public Integer getId() { return id; }
+
     public Revision getRevisionId() { return revisionId; }
     public void setRevisionId(Revision revisionId) { this.revisionId = revisionId; }
 
@@ -40,7 +42,7 @@ public class RevisionProduct extends ItemsProduct implements Serializable {
 
     @Override
     public String toString() {
-        return "SaleProduct{" +
+        return "RevisionProduct{" +
                 "id=" + id +
                 ", saleId=" + revisionId +
                 ", PRODUCT=" + getProduct().getName() +
